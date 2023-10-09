@@ -1,0 +1,18 @@
+{
+    "en": {
+        "greeting": "Hello",
+        "message": "This is a simple translator",
+        "good": "Good",
+        "morning": "Morning",
+        "work": "Work",
+        "amar nam": "amar nam"
+      },
+      "bn": {
+        "greeting": "হ্যালো",
+        "message": "এটি একটি সহজ অনুবাদক",
+        "good": "ভাল",
+        "morning": "সকাল",
+        "work": "কাজ",
+        "amar nam": "আমার নাম"
+      }
+  }

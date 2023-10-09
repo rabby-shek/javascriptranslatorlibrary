@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Language Translation</title>
+</head>
+<body>
+    <label for="from-language">Select From Language:</label>
+    <select id="from-language">
+        <option value="english">English</option>
+        <option value="bengali">Bengali</option>
+        <option value="french">French</option>
+        <option value="latin">Latin</option>
+        <!-- Add more languages as needed -->
+    </select>
+    
+    <label for="to-language">Select To Language:</label>
+    <select id="to-language">
+        <option value="bengali">Bengali</option>
+        <option value="english">English</option>
+        <option value="french">French</option>
+        <option value="latin">Lating</option>
+        <!-- Add more languages as needed -->
+    </select>
+
+    <button id="toggle-language">Toggle Language</button>
+    
+    <p data-translate="greeting" data-english="Hello" data-bengali="হ্যালো" data-french="Bonjour" data-latin="ola">Hello</p>
+    <p data-translate="description" data-english="This is a demo" data-bengali="এটি একটি ডেমো" data-french="Ceci est une démo" data-latin="kertis">This is a demo</p>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggleButton = document.getElementById("toggle-language");
+            const fromLanguageSelect = document.getElementById("from-language");
+            const toLanguageSelect = document.getElementById("to-language");
+            const elementsToTranslate = document.querySelectorAll("[data-translate]");
+            
+            function translateTo(fromLang, toLang) {
+                elementsToTranslate.forEach(element => {
+                    const translationKey = element.getAttribute("data-translate");
+                    const translation = element.getAttribute(`data-${fromLang}`);
+
+                    if (translationKey && translation) {
+                        element.textContent = translation;
+                    } else {
+                        // Display a warning if attributes are missing
+                        alert(`Warning: Element with data-translate="${translationKey}" is missing required attributes.`);
+                    }
+                });
+            }
+
+            toggleButton.addEventListener("click", function() {
+                const fromLang = fromLanguageSelect.value;
+                const toLang = toLanguageSelect.value;
+
+                // Toggle the languages
+                fromLanguageSelect.value = toLang;
+                toLanguageSelect.value = fromLang;
+
+                // Translate to the new languages
+                translateTo(fromLang, toLang);
+
+                // Store the selected languages in session storage
+                sessionStorage.setItem("fromLanguage", fromLang);
+                sessionStorage.setItem("toLanguage", toLang);
+            });
+
+            // Retrieve selected languages from session storage if available
+            const fromLangStored = sessionStorage.getItem("fromLanguage");
+            const toLangStored = sessionStorage.getItem("toLanguage");
+
+            if (fromLangStored && toLangStored) {
+                // Set the dropdowns to the stored languages
+                fromLanguageSelect.value = fromLangStored;
+                toLanguageSelect.value = toLangStored;
+                // Translate to the stored languages
+                translateTo(fromLangStored, toLangStored);
+            }
+        });
+    </script>
+</body>
+</html>
